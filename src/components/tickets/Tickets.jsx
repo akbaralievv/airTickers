@@ -1,7 +1,9 @@
-import Card from './Card';
-import data from '../../tickets.json';
 import { useContext } from 'react';
+
+import Card from './Card';
 import { FilterContext } from '../../App';
+
+import data from '../../tickets.json';
 
 function Tickets() {
   const { checked } = useContext(FilterContext);

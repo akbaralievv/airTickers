@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
 import { FilterContext } from '../../App';
 
 const Currency = () => {
@@ -9,6 +10,7 @@ const Currency = () => {
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+
   return (
     <ToggleButtonGroup
       color="primary"

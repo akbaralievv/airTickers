@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
+
 import { FilterContext } from '../../App';
 
-function Card({ data }) {
-  const { alignment } = useContext(FilterContext);
-  const currencyRates = {
-    rub: 1,
-    usd: 0.01,
-    euro: 0.0097,
-  };
-  function formatDate(inputDate) {
-    const date = new Date(inputDate);
+const currencyRates = {
+  rub: 1,
+  usd: 0.01,
+  euro: 0.0097,
+};
 
+const Card = ({ data }) => {
+  const { alignment } = useContext(FilterContext);
+
+  const formatDate = (inputDate) => {
+    const date = new Date(inputDate);
     const months = [
       'янв',
       'фев',
@@ -33,19 +35,21 @@ function Card({ data }) {
     const year = date.getFullYear();
     const dayOfWeek = date.getDay();
 
-    const formattedDate = `${day} ${months[month]} ${year}, ${daysOfWeek[dayOfWeek]}`;
+    return `${day} ${months[month]} ${year}, ${daysOfWeek[dayOfWeek]}`;
+  };
 
-    return formattedDate;
-  }
-
-  function convertPrice(price) {
+  const convertPrice = (price) => {
     if (alignment) {
       const convertedPrice = price * currencyRates[alignment];
       return convertedPrice.toFixed(0);
-    } else {
-      return price;
     }
-  }
+    return price;
+  };
+
+  const currencySymbol = alignment === 'euro' ? '€' : alignment === 'usd' ? '$' : '₽';
+
+  const buyButtonText = `Купить за ${convertPrice(data.price)}${currencySymbol}`;
+
   return (
     <div className="tickets-card">
       <div className="button">
@@ -53,10 +57,7 @@ function Card({ data }) {
           src="https://aeronautica.online/wp-content/uploads/2017/05/Turkish-Airlines-Logo.jpg"
           alt="img"
         />
-        <button onClick={() => alert('Спасибо за покупку!')}>
-          Купить за {convertPrice(data.price)}
-          {alignment === 'euro' ? '€' : alignment === 'usd' ? '$' : '₽'}
-        </button>
+        <button onClick={() => alert('Спасибо за покупку!')}>{buyButtonText}</button>
       </div>
       <div className="title">
         <div className="from">
@@ -83,7 +84,7 @@ function Card({ data }) {
       </div>
     </div>
   );
-}
+};
 
 Card.propTypes = {
   data: PropTypes.shape({
